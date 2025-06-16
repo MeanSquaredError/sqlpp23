@@ -51,6 +51,8 @@ The following pages will tell you how to use it:
 - **Advanced Topics**
   - [Thread Safety](/docs/thread_safety.md)
   - [Connection Pool](/docs/connection_pool.md)
+- **Common usage patterns**
+  - [Optimistic concurrency control](/docs/patterns/optimistic.md)
 
 If you are coming from [sqlpp11](https://github.com/rbock/sqlpp11), you might be
 interested in the [differences](/docs/differences-to-sqlpp11.md).
