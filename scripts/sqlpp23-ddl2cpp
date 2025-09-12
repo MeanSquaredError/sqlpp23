@@ -748,8 +748,7 @@ def writeTable(table, header, args):
         print("      SQLPP_CREATE_NAME_TAG_FOR_SQL_AND_CPP("
             + escape_if_reserved(sqlColumnName) + ", " + columnMember + ");"
             , file=header)
-        columnIsConst = column.hasGeneratedValue
-        constPrefix = "const " if columnIsConst else ""
+        constPrefix = "const " if column.hasGeneratedValue else ""
         columnCanBeNull = not column.notNull and not column.isPrimaryKey and not column.hasSerialValue
         if columnCanBeNull:
             print("      using data_type = " + constPrefix + "std::optional<::sqlpp::" + columnType + ">;", file=header)
