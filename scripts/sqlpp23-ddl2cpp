@@ -309,6 +309,18 @@ def createDdlParser():
     ).setResultsName("create")
     # ddlString.setDebug(True) #uncomment to debug pyparsing
 
+    # ALTER TABLE ... ALTER COLUMN ... SET DEFAULT ... parser
+    ddlSetDefault =
+        pp.CaselessKeyword("ALTER")
+        + pp.CaselessKeyword("TABLE")
+        + pp.Optional(pp.CaselessKeyword("ONLY"))
+        + ddlName.setResultsName("tableName")
+        + pp.CaselessKeyword("ALTER")
+        + pp.CaselessKeyword("COLUMN")
+        + ddlName.setResultsName("columnName")
+        + pp.CaselessKeyword("SET")
+        + pp.CaselessKeyword("DEFAULT")
+
     ddl = pp.OneOrMore(pp.Group(pp.Suppress(pp.SkipTo(ddlCreateTable, False)) + pp.Located(ddlCreateTable))).setResultsName("tables").setParseAction(SetContent)
 
     ddlComment = pp.oneOf(["--", "#"]) + pp.restOfLine
