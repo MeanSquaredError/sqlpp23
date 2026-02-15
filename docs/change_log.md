@@ -4,10 +4,13 @@
 
 ## next
 
-Breaking changes:\
+Breaking changes:
+
 - Added log_category parameter to log function, #86
 
-Other changes:\
+Other changes:
+
+- add .as<"my_name">() overload (requires C++26 with reflection), #99
 - deprecate result_row_t::as_tuple
 - new as_tuple(const result_row_t&)
 - new get_sql_name_tuple(const result_row_t&), #72
