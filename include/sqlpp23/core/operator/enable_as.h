@@ -29,6 +29,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <sqlpp23/core/operator/as_expression.h>
 #include <sqlpp23/core/type_traits.h>
 
+#include <sqlpp23/core/name/create_reflection_name_tag.h>
+
 namespace sqlpp {
 // To be used as CRTP base for expressions that should offer the as() member
 // function.
@@ -39,6 +41,16 @@ class enable_as {
       -> decltype(::sqlpp::as(std::forward<Expr>(self), alias)) {
     return ::sqlpp::as(std::forward<Expr>(self), alias);
   }
+
+#if SQLPP_INCLUDE_REFLECTION == 1
+  template <::sqlpp::detail::fixed_string Alias, typename Expr>
+  constexpr auto as(this Expr&& self)
+      -> decltype(::sqlpp::as(::std::forward<Expr>(self),
+                              ::sqlpp::meta::make_alias<Alias>())) {
+    return ::sqlpp::as(::std::forward<Expr>(self),
+                       ::sqlpp::meta::make_alias<Alias>());
+  }
+#endif
 };
 
 template <typename T>

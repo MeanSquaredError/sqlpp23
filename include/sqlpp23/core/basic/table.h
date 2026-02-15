@@ -35,6 +35,8 @@
 #include <sqlpp23/core/detail/type_set.h>
 #include <sqlpp23/core/type_traits.h>
 
+#include <sqlpp23/core/name/create_reflection_name_tag.h>
+
 namespace sqlpp {
 template <typename TableSpec>
 struct table_t : public TableSpec::template _table_columns<table_t<TableSpec>>,
@@ -44,6 +46,15 @@ struct table_t : public TableSpec::template _table_columns<table_t<TableSpec>>,
       -> table_as_t<TableSpec, name_tag_of_t<NameTagProvider>> {
     return {};
   }
+
+#if SQLPP_INCLUDE_REFLECTION == 1
+  template <::sqlpp::detail::fixed_string Alias>
+  constexpr auto as() const -> table_as_t<
+      TableSpec,
+      name_tag_of_t<decltype(::sqlpp::meta::make_alias<Alias>())>> {
+    return {};
+  }
+#endif
 };
 
 template <typename TableSpec>
