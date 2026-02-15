@@ -23,7 +23,7 @@ As seen above, a sub select statement with single column and a single result row
 To use it a sub select as a column, you need to wrap in `sqlpp::value` and give the whole thing a name, e.g.
 
 ```c++
-SQLPP_ALIAS_PROVIDER(cheese_cake); // Declared outside of function
+SQLPP_CREATE_NAME_TAG(cheese_cake); // Declared outside of function
 // ...
 for (const auto& row :
      db(select(all_of(foo),
@@ -56,7 +56,7 @@ A select can be used as a pseudo table in another select. You just have to give
 it a name.
 
 ```c++
-SQLPP_ALIAS_PROVIDER(sub); // Declared outside of functions
+SQLPP_CREATE_NAME_TAG(sub); // Declared outside of functions
 // [...]
 
 auto sub_select = select(all_of(foo)).from(foo).where(foo.id == 42).as(sub);

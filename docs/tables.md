@@ -91,9 +91,9 @@ useful for self-joins, for instance.
 
 ```C++
 // Outside of functions
-SQLPP_ALIAS_PROVIDER(left);
-SQLPP_ALIAS_PROVIDER(right);
-SQLPP_ALIAS_PROVIDER(r_id);
+SQLPP_CREATE_NAME_TAG(left);
+SQLPP_CREATE_NAME_TAG(right);
+SQLPP_CREATE_NAME_TAG(r_id);
 [...]
 
 // Inside a function

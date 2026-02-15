@@ -171,7 +171,7 @@ select(sqlpp::value(
 The other use of the `value` function is to wrap a [sub select](/docs/sub_select.md) for use as a selected column.
 
 ```c++
-SQLPP_ALIAS_PROVIDER(cheese_cake); // Declared outside of function
+SQLPP_CREATE_NAME_TAG(cheese_cake); // Declared outside of function
 // ...
 for (const auto& row :
      db(select(all_of(foo),

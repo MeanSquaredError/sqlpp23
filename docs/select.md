@@ -101,8 +101,7 @@ would be `foo.id`, `foo.name` and `foo.hasFun`.
 
 Other expressions, like function calls or arithmetic operations, for instance, do
 not have a name per se. But you can give them a name using the
-`as(name_provider)` method. The easiest way is to use a named expression as
-`name_provider`, e.g.
+`as(name_provider)` method, see [names](/docs/names.md).
 
 ```C++
 const auto unnamed_expression = (foo.id + 17) * 4;
@@ -112,22 +111,6 @@ for (const auto& row : db(select(
 {
    // `row.id` represents the selected expression of type `int64_t`.
 }
-```
-
-Another option is to define an alias like this:
-
-```C++
-// In namespace scope
-SQLPP_ALIAS_PROVIDER(total);
-
-[...]
-
-// In a function
-for (const auto& row : db(select(sum(id).as(total)).as(foo.id).from(tab).where(true))
-{
-   std::cout << row.total << std::endl;
-}
-
 ```
 
 Using aliases also comes in handy when you join tables and have several columns
@@ -141,7 +124,7 @@ This will result in compile error when accessing `row.id`. One of the columns
 needs an alias.
 
 ```C++
-SQLPP_ALIAS_PROVIDER(barId);
+SQLPP_CREATE_NAME_TAG(barId);
 
 [...]
 
@@ -162,7 +145,7 @@ select(all_of(foo)).from(foo).where(condition);
 `select` will not let you mix aggregates (see [`group_by`](#group-by) and
 [aggregate functions](/docs/aggregate_functions.md)) and non-aggregates, e.g.
 
-````c++
+```c++
 // This will fail to compile as  it mixes aggregate and non-aggregate values.
 db(select(
      foo.id,      // non-aggregate
@@ -187,7 +170,7 @@ select(
     dynamic(maybe1, foo.textN),       // dynamically selected, if maybe1 == true
     dynamic(maybe2, bar.id.as(barId)) // dynamically selected, if maybe2 == true
     ).from(foo.cross_join(bar)).where(condition);
-````
+```
 
 Dynamically selected columns are represented as `std::optional` in the result
 row. In case the condition (e.g. `maybe1`) is false:
