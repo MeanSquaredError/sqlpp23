@@ -29,5 +29,6 @@ function(create_test name)
     add_test(NAME ${target} COMMAND ${target})
 endfunction()
 
+create_test(enums)
 create_test(optimistic_concurrency_control)
 create_test(thread_local_connection)
